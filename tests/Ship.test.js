@@ -1,4 +1,5 @@
 import Ship from '../src/models/Ship.js';
+
 describe('Ship', () => {
   test('creates a ship with the correct length', () => {
     const ship = new Ship(4);
