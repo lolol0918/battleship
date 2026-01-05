@@ -6,7 +6,9 @@ export default class Ship {
   }
 
   hit() {
-    if (this.hits < this.length) this.hits++;
+    if (this.hits < this.length) {
+      this.hits += 1;
+    }
   }
 
   isSunk() {
