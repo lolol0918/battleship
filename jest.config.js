@@ -1,6 +1,8 @@
 export default {
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
   transform: {
     '^.+\\.js$': 'babel-jest',
   },
+  extensionsToTreatAsEsm: ['.js'],
+  transformIgnorePatterns: [],
 };

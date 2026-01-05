@@ -1,6 +1,7 @@
 // tests/Gameboard.test.js
 import Gameboard from '../src/models/Gameboard';
 import Ship from '../src/models/Ship';
+import 'regenerator-runtime/runtime';
 
 describe('Gameboard', () => {
   let board;
