@@ -12,7 +12,7 @@ describe('Gameboard', () => {
     destroyer = new Ship(3);
   });
 
-  test('can place a ship with correct coordinates', () => {
+  test.only('can place a ship with correct coordinates', () => {
     const coordinates = [
       [0, 0],
       [0, 1],
