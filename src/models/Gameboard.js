@@ -28,4 +28,22 @@ export default class Gameboard {
 
     this.ships.push({ ship, coordinates });
   }
+
+  _findShipAt([x, y]) {
+    return this.ships.find(({ ship, coordinates }) =>
+      coordinates.some(([cx, cy]) => cx === x && cy === y),
+    );
+  }
+
+  receiveAttack(coordinates) {
+    const target = this._findShipAt(coordinates);
+
+    // I return hit or miss values to satisfy the test
+    if (target) {
+      target.ship.hit();
+      return 'hit';
+    }
+    this.missedAttacks.push(coordinates);
+    return 'miss';
+  }
 }

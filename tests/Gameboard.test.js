@@ -12,7 +12,7 @@ describe('Gameboard', () => {
     destroyer = new Ship(3);
   });
 
-  test.only('can place a ship with correct coordinates', () => {
+  test('can place a ship with correct coordinates', () => {
     const coordinates = [
       [0, 0],
       [0, 1],
@@ -51,7 +51,7 @@ describe('Gameboard', () => {
     expect(destroyer.isSunk()).toBe(false);
   });
 
-  test('records a missed attack', () => {
+  test.only('records a missed attack', () => {
     const coordinates = [
       [0, 0],
       [0, 1],
