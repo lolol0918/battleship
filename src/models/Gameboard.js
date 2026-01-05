@@ -2,6 +2,8 @@ export default class Gameboard {
   constructor() {
     this.ships = [];
     this.missedAttacks = [];
+    this.successfulAttacks = [];
+    this.allAttacks = new Set();
   }
 
   // helper function  for checking if there is  a ship on a square
@@ -36,11 +38,21 @@ export default class Gameboard {
   }
 
   receiveAttack(coordinates) {
+    const coordString = coordinates.toString();
+
+    if (this.allAttacks.has(coordString)) {
+      return 'already attacked';
+    }
+
+    // marked as attacked
+    this.allAttacks.add(coordString);
+
     const target = this._findShipAt(coordinates);
 
     // I return hit or miss values to satisfy the test
     if (target) {
       target.ship.hit();
+      this.successfulAttacks.push(coordinates);
       return 'hit';
     }
     this.missedAttacks.push(coordinates);
