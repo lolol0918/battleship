@@ -58,4 +58,9 @@ export default class Gameboard {
     this.missedAttacks.push(coordinates);
     return 'miss';
   }
+
+  allShipsSunk() {
+    // shipWrapper contains both ship and coordinates
+    return this.ships.every((shipWrapper) => shipWrapper.ship.isSunk());
+  }
 }

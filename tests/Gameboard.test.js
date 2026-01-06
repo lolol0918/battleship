@@ -98,7 +98,7 @@ describe('Gameboard', () => {
     expect(board.allShipsSunk()).toBe(false);
   });
 
-  test.only('cannot count a hit multiple times on the same coordinate', () => {
+  test('cannot count a hit multiple times on the same coordinate', () => {
     board.placeShip(destroyer, [
       [0, 0],
       [0, 1],
