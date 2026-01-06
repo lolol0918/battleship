@@ -3,6 +3,7 @@ export default class Ship {
     if (length <= 0) throw new Error('length must be positive');
     this.length = length;
     this.hits = 0;
+    this.sunk = false;
   }
 
   hit() {
@@ -12,6 +13,6 @@ export default class Ship {
   }
 
   isSunk() {
-    return this.hits >= this.length;
+    return this.sunk || this.hits >= this.length;
   }
 }

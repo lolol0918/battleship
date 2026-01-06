@@ -60,7 +60,8 @@ export default class Gameboard {
   }
 
   allShipsSunk() {
-    // shipWrapper contains both ship and coordinates
+    //  shipWrapper contains both ship and coordinates
+
     return this.ships.every((shipWrapper) => shipWrapper.ship.isSunk());
   }
 }
