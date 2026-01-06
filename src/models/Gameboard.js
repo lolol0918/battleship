@@ -31,10 +31,13 @@ export default class Gameboard {
     this.ships.push({ ship, coordinates });
   }
 
+  // changed this method to return the ship not the wrapper
   _findShipAt([x, y]) {
-    return this.ships.find(({ ship, coordinates }) =>
+    const wrapper = this.ships.find(({ coordinates }) =>
       coordinates.some(([cx, cy]) => cx === x && cy === y),
     );
+
+    return wrapper ? wrapper.ship : null;
   }
 
   receiveAttack(coordinates) {
@@ -51,7 +54,7 @@ export default class Gameboard {
 
     // I return hit or miss values to satisfy the test
     if (target) {
-      target.ship.hit();
+      target.hit();
       this.successfulAttacks.push(coordinates);
       return 'hit';
     }
