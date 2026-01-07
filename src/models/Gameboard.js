@@ -1,28 +1,33 @@
 export default class Gameboard {
+  static GRID_SIZE = 10;
+
   constructor() {
     this.ships = [];
     this.missedAttacks = [];
     this.allAttacks = new Set();
+    this.occupiedCoordinates = new Set();
   }
 
   // helper function  for checking if there is  a ship on a square
   isCoordinateOccupied([x, y]) {
-    for (const { coordinates } of this.ships) {
-      for (const [cx, cy] of coordinates) {
-        if (cx === x && cy === y) return true;
-      }
-    }
-
-    return false;
+    return this.occupiedCoordinates.has(`${x},${y}`);
   }
 
   placeShip(ship, coordinates) {
-    // Add this:
+    // Validate bounds
     for (const [x, y] of coordinates) {
-      if (x < 0 || x > 9 || y < 0 || y > 9) {
-        throw new Error('Coordinates out of bounds (0-9 only)');
+      if (
+        x < 0 ||
+        x >= Gameboard.GRID_SIZE ||
+        y < 0 ||
+        y >= Gameboard.GRID_SIZE
+      ) {
+        throw new Error(
+          `Coordinates out of bounds (0-${Gameboard.GRID_SIZE - 1})`,
+        );
       }
     }
+
     if (coordinates.length !== ship.length) {
       throw new Error('Coordinates length must match ship length');
     }
@@ -32,6 +37,10 @@ export default class Gameboard {
         throw new Error('Cannot place ship on occupied space');
       }
     }
+
+    coordinates.forEach((coord) => {
+      this.occupiedCoordinates.add(coord.toString);
+    });
 
     this.ships.push({ ship, coordinates });
   }
@@ -46,6 +55,17 @@ export default class Gameboard {
   }
 
   receiveAttack(coordinates) {
+    // Validate input
+    const [x, y] = coordinates;
+    if (
+      x < 0 ||
+      x >= Gameboard.GRID_SIZE ||
+      y < 0 ||
+      y >= Gameboard.GRID_SIZE
+    ) {
+      throw new Error('Attack coordinates out of bounds');
+    }
+
     const coordString = coordinates.toString();
 
     if (this.allAttacks.has(coordString)) {
@@ -60,7 +80,6 @@ export default class Gameboard {
     // I return hit or miss values to satisfy the test
     if (target) {
       target.hit();
-      this.successfulAttacks.push(coordinates);
       return 'hit';
     }
     this.missedAttacks.push(coordinates);
@@ -70,6 +89,7 @@ export default class Gameboard {
   allShipsSunk() {
     //  shipWrapper contains both ship and coordinates
 
+    if (this.ships.legnth === 0) return false; // no ships placed yet
     return this.ships.every((shipWrapper) => shipWrapper.ship.isSunk());
   }
 }
