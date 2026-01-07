@@ -7,6 +7,8 @@ export default class Ship {
   }
 
   hit() {
+    if (this.isSunk()) return;
+
     if (this.hits < this.length) {
       this.hits += 1;
     }
