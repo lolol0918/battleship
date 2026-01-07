@@ -2,7 +2,6 @@ export default class Gameboard {
   constructor() {
     this.ships = [];
     this.missedAttacks = [];
-    this.successfulAttacks = [];
     this.allAttacks = new Set();
   }
 
@@ -18,6 +17,12 @@ export default class Gameboard {
   }
 
   placeShip(ship, coordinates) {
+    // Add this:
+    for (const [x, y] of coordinates) {
+      if (x < 0 || x > 9 || y < 0 || y > 9) {
+        throw new Error('Coordinates out of bounds (0-9 only)');
+      }
+    }
     if (coordinates.length !== ship.length) {
       throw new Error('Coordinates length must match ship length');
     }
