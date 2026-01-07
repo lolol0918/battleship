@@ -89,7 +89,7 @@ export default class Gameboard {
   allShipsSunk() {
     //  shipWrapper contains both ship and coordinates
 
-    if (this.ships.legnth === 0) return false; // no ships placed yet
+    if (this.ships.length === 0) return false; // no ships placed yet
     return this.ships.every((shipWrapper) => shipWrapper.ship.isSunk());
   }
 }
