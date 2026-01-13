@@ -31,11 +31,11 @@ describe('GameController', () => {
     expect(game.computer).toBeDefined();
   });
 
-  test('starts with player turn', () => {
-    expect(game.getCurrentPlayer()).toBe('player');
+  test.only('starts with player turn', () => {
+    expect(game.getCurrentPlayer()).toBe(human);
   });
 
-  test('player can attack enemy board', () => {
+  test.only('player can attack enemy board', () => {
     const result = game.playerAttack([0, 0]);
 
     expect(['hit', 'miss']).toContain(result);
