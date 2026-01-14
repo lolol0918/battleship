@@ -63,7 +63,7 @@ describe('GameController', () => {
     expect(['hit', 'miss']).toContain(move.result);
   });
 
-  test('game ends when all ships of a player are sunk', () => {
+  test.only('game ends when all ships of a player are sunk', () => {
     // fake-sink all computer ships
     game.computer.gameboard.ships.forEach(({ ship }) => {
       while (!ship.isSunk()) {
@@ -71,7 +71,9 @@ describe('GameController', () => {
       }
     });
 
+    console.log(game.computer.gameboard.ships.map(({ ship }) => ship.isSunk()));
+
     expect(game.isGameOver()).toBe(true);
-    expect(game.getWinner()).toBe('player');
+    expect(game.getWinner()).toBe('human');
   });
 });

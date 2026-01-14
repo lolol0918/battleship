@@ -46,4 +46,20 @@ export default class GameController {
     this.switchTurn(); // back to human
     return { coordinates: coord, result };
   }
+
+  isGameOver() {
+    return (
+      this.player.gameboard.allShipsSunk() ||
+      this.computer.gameboard.allShipsSunk()
+    );
+  }
+
+  getWinner() {
+    if (!this.isGameOver()) return null;
+
+    if (this.player.gameboard.allShipsSunk()) return this.computer.name;
+    if (this.computer.gameboard.allShipsSunk()) return this.player.name;
+
+    return null;
+  }
 }
