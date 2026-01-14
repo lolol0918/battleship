@@ -25,4 +25,25 @@ export default class GameController {
 
     return result;
   }
+
+  computerAttack() {
+    if (this.currentTurn !== this.computer)
+      throw new Error("Not computer's turn");
+
+    let x;
+    let y;
+    let coord;
+
+    // pick random untried coordinate
+    do {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
+      coord = [x, y];
+    } while (this.player.gameboard.allAttacks.has(coord.toString()));
+
+    const result = this.player.gameboard.receiveAttack(coord);
+
+    this.switchTurn(); // back to human
+    return { coordinates: coord, result };
+  }
 }

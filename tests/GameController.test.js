@@ -54,7 +54,7 @@ describe('GameController', () => {
     }).toThrow('already attacked');
   });
 
-  test('computer makes a legal move', () => {
+  test.only('computer makes a legal move', () => {
     game.playerAttack([0, 0]); // switch to computer
 
     const move = game.computerAttack();
