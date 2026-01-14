@@ -8,6 +8,8 @@ export default class GameController {
   switchTurn() {
     this.currentTurn =
       this.currentTurn === this.player ? this.computer : this.player;
+
+    return this.currentTurn;
   }
 
   getCurrentPlayer() {
@@ -16,6 +18,9 @@ export default class GameController {
 
   playerAttack(coordinates) {
     const result = this.computer.gameboard.receiveAttack(coordinates);
+
+    if (result === 'already attacked') throw new Error('already attacked');
+
     this.switchTurn();
 
     return result;

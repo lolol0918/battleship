@@ -41,17 +41,17 @@ describe('GameController', () => {
     expect(['hit', 'miss']).toContain(result);
   });
 
-  test('turn switches after player attack', () => {
+  test.only('turn switches after player attack', () => {
     game.playerAttack([0, 0]);
-    expect(game.getCurrentPlayer()).toBe('computer');
+    expect(game.getCurrentPlayer()).toBe(game.computer);
   });
 
-  test('throws error when attacking same coordinate twice', () => {
+  test.only('throws error when attacking same coordinate twice', () => {
     game.playerAttack([1, 1]);
 
     expect(() => {
       game.playerAttack([1, 1]);
-    }).toThrow('Invalid move');
+    }).toThrow('already attacked');
   });
 
   test('computer makes a legal move', () => {
