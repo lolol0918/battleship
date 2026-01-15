@@ -18,7 +18,7 @@ export default class GameController {
   }
 
   playerAttack(coordinates) {
-    if (!this.isStarted) {
+    if (!this.hasStarted) {
       throw new Error('Game not started');
     }
 
