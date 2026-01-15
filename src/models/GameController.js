@@ -3,6 +3,7 @@ export default class GameController {
     this.player = player;
     this.computer = computer;
     this.currentTurn = this.player;
+    this.hasStarted = false;
   }
 
   switchTurn() {
@@ -17,6 +18,13 @@ export default class GameController {
   }
 
   playerAttack(coordinates) {
+    if (!this.isStarted) {
+      throw new Error('Game not started');
+    }
+
+    if (this.currentTurn !== this.player) {
+      throw new Error("Not player's turn");
+    }
     const result = this.computer.gameboard.receiveAttack(coordinates);
 
     if (result === 'already attacked') throw new Error('already attacked');
