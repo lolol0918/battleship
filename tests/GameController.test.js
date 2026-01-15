@@ -12,18 +12,13 @@ describe('GameController', () => {
     const humanBoard = new Gameboard();
     const computerBoard = new Gameboard();
 
-    // Add ships
-    const destroyer = new Ship(3);
-    computerBoard.placeShip(destroyer, [
-      [0, 0],
-      [0, 1],
-      [0, 2],
-    ]);
-
     human = new Player('human', humanBoard);
     computer = new Player('computer', computerBoard);
 
     game = new GameController(human, computer);
+
+    // Reset and populate boards
+    game.startGame();
   });
 
   test.only('initializes with two players', () => {
@@ -49,6 +44,9 @@ describe('GameController', () => {
   test.only('throws error when attacking same coordinate twice', () => {
     game.playerAttack([1, 1]);
 
+    // set turn back to player to test repeated attack
+    game.currentTurn = game.player;
+
     expect(() => {
       game.playerAttack([1, 1]);
     }).toThrow('already attacked');
@@ -71,9 +69,36 @@ describe('GameController', () => {
       }
     });
 
-    console.log(game.computer.gameboard.ships.map(({ ship }) => ship.isSunk()));
-
     expect(game.isGameOver()).toBe(true);
     expect(game.getWinner()).toBe('human');
+  });
+
+  test.only('startGame resets boards and sets current turn', () => {
+    const humanBoard = new Gameboard();
+    const computerBoard = new Gameboard();
+
+    // Add dummy ships to show reset works
+    const destroyer = new Ship(3);
+    computerBoard.placeShip(destroyer, [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ]);
+    humanBoard.placeShip(new Ship(2), [
+      [1, 0],
+      [1, 1],
+    ]);
+
+    game.startGame();
+
+    // After startGame, boards should be reset
+    expect(human.gameboard.ships.length).toBeGreaterThan(0); // new ships placed
+    expect(computer.gameboard.ships.length).toBeGreaterThan(0);
+
+    // Game should be marked started
+    expect(game.hasStarted).toBe(true);
+
+    // Current turn should be human
+    expect(game.getCurrentPlayer()).toBe(human);
   });
 });

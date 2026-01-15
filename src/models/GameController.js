@@ -1,3 +1,5 @@
+import Ship from './Ship';
+
 export default class GameController {
   constructor(player, computer) {
     this.player = player;
@@ -6,7 +8,30 @@ export default class GameController {
     this.hasStarted = false;
   }
 
-  // startGame() {}
+  startGame() {
+    // reset the player's board
+    this.player.gameboard.reset();
+    this.computer.gameboard.reset();
+
+    // Populate ships (hardcoded for now)
+    this.player.gameboard.placeShip(new Ship(5), [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+      [0, 3],
+      [0, 4],
+    ]); // example
+    this.computer.gameboard.placeShip(new Ship(5), [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+      [0, 3],
+      [0, 4],
+    ]); // example
+
+    this.currentTurn = this.player;
+    this.hasStarted = true;
+  }
 
   switchTurn() {
     this.currentTurn =
@@ -27,6 +52,7 @@ export default class GameController {
     if (this.currentTurn !== this.player) {
       throw new Error("Not player's turn");
     }
+
     const result = this.computer.gameboard.receiveAttack(coordinates);
 
     if (result === 'already attacked') throw new Error('already attacked');
