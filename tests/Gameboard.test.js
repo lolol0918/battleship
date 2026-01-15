@@ -113,3 +113,46 @@ describe('Gameboard', () => {
     expect(destroyer.hits).toBe(1); // assuming hits is accessible for testing
   });
 });
+
+describe('Gameboard reset', () => {
+  let board;
+  let ship;
+
+  beforeEach(() => {
+    board = new Gameboard();
+    ship = new Ship(3);
+    board.placeShip(ship, [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ]);
+    board.receiveAttack([0, 0]);
+    board.receiveAttack([5, 5]); // missed attack
+  });
+
+  test('reset clears ships', () => {
+    board.reset();
+    expect(board.ships.length).toBe(0);
+  });
+
+  test('reset clears missed attacks', () => {
+    board.reset();
+    expect(board.missedAttacks.length).toBe(0);
+  });
+
+  test('reset clears all attacks', () => {
+    board.reset();
+    expect(board.allAttacks.size).toBe(0);
+  });
+
+  test('after reset, can place ships again', () => {
+    board.reset();
+    const newShip = new Ship(2);
+    board.placeShip(newShip, [
+      [1, 0],
+      [1, 1],
+    ]);
+    expect(board.ships.length).toBe(1);
+    expect(board.ships[0].ship).toBe(newShip);
+  });
+});

@@ -6,6 +6,8 @@ export default class GameController {
     this.hasStarted = false;
   }
 
+  // startGame() {}
+
   switchTurn() {
     this.currentTurn =
       this.currentTurn === this.player ? this.computer : this.player;

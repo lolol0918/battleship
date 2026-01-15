@@ -8,6 +8,13 @@ export default class Gameboard {
     this.occupiedCoordinates = new Set();
   }
 
+  reset() {
+    this.ships = [];
+    this.missedAttacks = [];
+    this.allAttacks = new Set();
+    this.occupiedCoordinates = new Set();
+  }
+
   // helper function  for checking if there is  a ship on a square
   isCoordinateOccupied([x, y]) {
     return this.occupiedCoordinates.has(`${x},${y}`);
