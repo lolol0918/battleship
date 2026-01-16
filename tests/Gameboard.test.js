@@ -156,3 +156,38 @@ describe('Gameboard reset', () => {
     expect(board.ships[0].ship).toBe(newShip);
   });
 });
+
+describe('Gameboard random ship placement', () => {
+  let board;
+
+  beforeEach(() => {
+    board = new Gameboard();
+  });
+
+  test('places all ships randomly without overlap', () => {
+    board.placeShipRandomly();
+
+    // All ships are placed
+    expect(board.ships.length).toBe(Gameboard.shipsToPlace.length);
+
+    // No overlapping coordinates
+    const allCoords = new Set();
+    for (const { coordinates } of board.ships) {
+      for (const [x, y] of coordinates) {
+        const key = `${x},${y}`;
+        expect(allCoords.has(key)).toBe(false); // no duplicates
+        allCoords.add(key);
+      }
+    }
+
+    // All coordinates are in bounds
+    for (const { coordinates } of board.ships) {
+      for (const [x, y] of coordinates) {
+        expect(x).toBeGreaterThanOrEqual(0);
+        expect(x).toBeLessThan(Gameboard.GRID_SIZE);
+        expect(y).toBeGreaterThanOrEqual(0);
+        expect(y).toBeLessThan(Gameboard.GRID_SIZE);
+      }
+    }
+  });
+});

@@ -1,3 +1,9 @@
+import {
+  getRandomOrientation,
+  getRandomCoordinate,
+  generateShipCoordinates,
+} from '../utils/placeShipRandomly';
+
 export default class Gameboard {
   static GRID_SIZE = 10;
 
@@ -62,9 +68,34 @@ export default class Gameboard {
     this.ships.push({ ship, coordinates });
   }
 
-  // placeShipRandomly() {
+  placeShipRandomly() {
+    for (const { name, length } of Gameboard.shipsToPlace) {
+      let placed = false;
 
-  // }
+      while (!placed) {
+        const orientation = getRandomOrientation();
+
+        // this is where the coord will start
+        const startingCoordinate = getRandomCoordinate();
+        const [x, y] = startingCoordinate;
+
+        // and this one is the collection of all of them
+        const coordinates = [];
+
+        for (let i = 0; i < length; i++) {
+          const coord = orientation === 'horizontal' ? [x + i, y] : [x, y + i];
+          coordinates.push(coord);
+        }
+
+        try {
+          this.placeShip({ name, length }, coordinates);
+          placed = true;
+        } catch (err) {
+          // Do nothing, just retry with new random coordinates
+        }
+      }
+    }
+  }
 
   // changed this method to return the ship not the wrapper
   _findShipAt([x, y]) {
