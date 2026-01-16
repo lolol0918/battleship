@@ -1,6 +1,14 @@
 export default class Gameboard {
   static GRID_SIZE = 10;
 
+  static shipsToPlace = [
+    { name: 'Carrier', length: 5 },
+    { name: 'Battleship', length: 4 },
+    { name: 'Cruiser', length: 3 },
+    { name: 'Submarine', length: 3 },
+    { name: 'Destroyer', length: 2 },
+  ];
+
   constructor() {
     this.ships = [];
     this.missedAttacks = [];
@@ -21,36 +29,42 @@ export default class Gameboard {
   }
 
   placeShip(ship, coordinates) {
-    // Validate bounds
-    for (const [x, y] of coordinates) {
-      if (
-        x < 0 ||
-        x >= Gameboard.GRID_SIZE ||
-        y < 0 ||
-        y >= Gameboard.GRID_SIZE
-      ) {
-        throw new Error(
-          `Coordinates out of bounds (0-${Gameboard.GRID_SIZE - 1})`,
-        );
-      }
-    }
-
+    // Check ship length matches coordinates
     if (coordinates.length !== ship.length) {
       throw new Error('Coordinates length must match ship length');
     }
 
-    for (const coord of coordinates) {
-      if (this.isCoordinateOccupied(coord)) {
-        throw new Error('Cannot place ship on occupied space');
-      }
+    // Validate coordinates
+    const outOfBounds = coordinates.some(
+      ([x, y]) =>
+        x < 0 || x >= Gameboard.GRID_SIZE || y < 0 || y >= Gameboard.GRID_SIZE,
+    );
+    if (outOfBounds) {
+      throw new Error(
+        `Coordinates out of bounds (0-${Gameboard.GRID_SIZE - 1})`,
+      );
     }
 
-    coordinates.forEach((coord) => {
-      this.occupiedCoordinates.add(coord.toString);
-    });
+    // Check for overlap
+    const overlap = coordinates.some((coord) =>
+      this.isCoordinateOccupied(coord),
+    );
+    if (overlap) {
+      throw new Error('Cannot place ship on occupied space');
+    }
 
+    // Mark coordinates as occupied
+    coordinates.forEach((coord) =>
+      this.occupiedCoordinates.add(coord.toString()),
+    );
+
+    // Add ship to board
     this.ships.push({ ship, coordinates });
   }
+
+  // placeShipRandomly() {
+
+  // }
 
   // changed this method to return the ship not the wrapper
   _findShipAt([x, y]) {
