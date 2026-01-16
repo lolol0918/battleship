@@ -1,35 +1,24 @@
-export default function placeShipsRandomly(gameboard, ships) {
-  const GRID_SIZE = 10;
+export function getRandomOrientation() {
+  return Math.random() < 0.5 ? 'horizontal' : 'vertical';
+}
 
-  ships.forEach((ship) => {
-    let placed = false;
+export function getRandomCoordinate(boardSize = 10) {
+  const x = Math.floor(Math.random() * boardSize);
+  const y = Math.floor(Math.random() * boardSize);
+  return [x, y];
+}
 
-    while (!placed) {
-      const isHorizontal = Math.random() < 0.5; // horizontal or vertical
-      const x = Math.floor(Math.random() * GRID_SIZE);
-      const y = Math.floor(Math.random() * GRID_SIZE);
+export function generateShipCoordinates(start, length, orientation) {
+  const [x, y] = start;
+  const coordinates = [];
 
-      // Generate coordinates for the ship
-      const coordinates = [];
-      for (let i = 0; i < ship.length; i += 1) {
-        const nx = isHorizontal ? x + i : x;
-        const ny = isHorizontal ? y : y + i;
-
-        // Check if out of bounds
-        if (nx >= GRID_SIZE || ny >= GRID_SIZE) break;
-
-        coordinates.push([nx, ny]);
-      }
-
-      // If coordinates length matches ship, try placing
-      if (coordinates.length === ship.length) {
-        try {
-          gameboard.placeShip(ship, coordinates);
-          placed = true;
-        } catch (err) {
-          // overlap? just retry
-        }
-      }
+  for (let i = 0; i < length; i += 1) {
+    if (orientation === 'horizontal') {
+      coordinates.push([x + i, y]);
+    } else {
+      coordinates.push([x, y + i]);
     }
-  });
+  }
+
+  return coordinates;
 }
