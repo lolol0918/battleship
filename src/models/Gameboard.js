@@ -77,15 +77,13 @@ export default class Gameboard {
 
         // this is where the coord will start
         const startingCoordinate = getRandomCoordinate();
-        const [x, y] = startingCoordinate;
 
         // and this one is the collection of all of them
-        const coordinates = [];
-
-        for (let i = 0; i < length; i++) {
-          const coord = orientation === 'horizontal' ? [x + i, y] : [x, y + i];
-          coordinates.push(coord);
-        }
+        const coordinates = generateShipCoordinates(
+          startingCoordinate,
+          length,
+          orientation,
+        );
 
         try {
           this.placeShip({ name, length }, coordinates);
