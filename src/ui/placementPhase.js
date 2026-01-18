@@ -96,8 +96,16 @@ export default class PlacementPhase {
     const randomBtn = document.getElementById('randomize-btn');
     randomBtn.addEventListener('click', () => {
       this.playerBoard.placeShipsRandomly();
-      this.renderShipPalette();
+
+      // All ships are now placed, empty the palette data
+      this.availableShips = [];
+
+      // Re-render UI
+      this.renderShipPalette(); // this will now render nothing
       this.renderBoard();
+
+      // Enable start button
+      this.checkStartButton();
     });
   }
 }
