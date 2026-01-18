@@ -81,7 +81,8 @@ export default class PlacementPhase {
     rotateBtn.addEventListener('click', () => {
       this.orientation =
         this.orientation === 'horizontal' ? 'vertical' : 'horizontal';
-      orientationLabel.textContent = this.orientation;
+      orientationLabel.textContent =
+        this.orientation.charAt(0).toUpperCase() + this.orientation.slice(1);
     });
   }
 

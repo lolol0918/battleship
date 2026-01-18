@@ -34,12 +34,11 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 40px);
   grid-template-rows: repeat(10, 40px);
-  gap: 2px;
 }
 
 .cell {
   background-color: #ddd;
-  border: 1px solid #999;
+  border: 1px solid #555;
 }
 /* Hover effect for player's board */
 .player-board .cell:hover {
