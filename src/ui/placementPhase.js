@@ -19,6 +19,11 @@ export default class PlacementPhase {
     this.setupRandomizeButton();
   }
 
+  checkStartButton() {
+    const startBtn = document.getElementById('start-game-btn');
+    startBtn.disabled = this.availableShips.length > 0;
+  }
+
   renderBoard() {
     renderBoard(this.container, this.playerBoard, { showShips: true });
   }
@@ -69,6 +74,7 @@ export default class PlacementPhase {
 
       this.renderBoard();
       this.renderShipPalette();
+      this.checkStartButton();
     } catch (err) {
       /* empty */
     }
@@ -90,6 +96,7 @@ export default class PlacementPhase {
     const randomBtn = document.getElementById('randomize-btn');
     randomBtn.addEventListener('click', () => {
       this.playerBoard.placeShipsRandomly();
+      this.renderShipPalette();
       this.renderBoard();
     });
   }
