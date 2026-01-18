@@ -68,7 +68,10 @@ export default class Gameboard {
     this.ships.push({ ship, coordinates });
   }
 
-  placeShipRandomly() {
+  placeShipsRandomly() {
+    // reset ships to avoid duplicates
+    this.reset();
+
     for (const { name, length } of Gameboard.shipsToPlace) {
       let placed = false;
 

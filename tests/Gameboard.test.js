@@ -165,7 +165,7 @@ describe('Gameboard random ship placement', () => {
   });
 
   test('places all ships randomly without overlap', () => {
-    board.placeShipRandomly();
+    board.placeShipsRandomly();
 
     // All ships are placed
     expect(board.ships.length).toBe(Gameboard.shipsToPlace.length);
