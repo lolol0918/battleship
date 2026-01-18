@@ -5,6 +5,7 @@ export default class PlacementPhase {
     this.playerBoard = playerBoard;
     this.container = document.getElementById(containerId);
     this.shipData = shipData; // array of ships
+    this.availableShips = [...shipData];
     this.orientation = 'horizontal';
     this.currentShip = null;
 
@@ -25,7 +26,7 @@ export default class PlacementPhase {
   renderShipPalette() {
     const palette = document.getElementById('ship-palette');
     palette.innerHTML = '';
-    this.shipData.forEach((ship) => {
+    this.availableShips.forEach((ship) => {
       const div = document.createElement('div');
       div.classList.add('draggable-ship');
       div.draggable = true;
@@ -58,7 +59,16 @@ export default class PlacementPhase {
 
     try {
       this.playerBoard.placeShip(this.currentShip, coords);
+
+      // remove ship from availableShips
+      this.availableShips = this.availableShips.filter(
+        (ship) => ship.name !== this.currentShip.name,
+      );
+
+      this.currentShip = null;
+
       this.renderBoard();
+      this.renderShipPalette();
     } catch (err) {
       /* empty */
     }
