@@ -1,10 +1,15 @@
 import './style.css';
 import Gameboard from './models/Gameboard.js';
-import renderBoard from './ui/renderBoard.js';
+import PlacementPhase from './ui/placementPhase.js';
 
 const playerGameboard = new Gameboard();
+const { shipsToPlace } = Gameboard;
 
-document.addEventListener('DOMContentLoaded', () => {
-  const placementBoard = document.getElementById('placement-board');
-  renderBoard(placementBoard, playerGameboard);
-});
+// store the instance even if you don’t use it immediately
+const placementPhase = new PlacementPhase(
+  playerGameboard,
+  'placement-board',
+  shipsToPlace,
+);
+
+placementPhase.initUI();
