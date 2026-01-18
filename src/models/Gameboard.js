@@ -2,7 +2,7 @@ import {
   getRandomOrientation,
   getRandomCoordinate,
   generateShipCoordinates,
-} from '../utils/placeShipRandomly';
+} from '../utils/placeShipRandomly.js';
 
 export default class Gameboard {
   static GRID_SIZE = 10;

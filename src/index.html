@@ -7,13 +7,24 @@
   </head>
   <body>
     <div id="placement-phase">
-      <h2>Place Your Fleet</h2>
       <div class="ship-info">
-        <p>Place: <span id="current-ship">Carrier (5)</span></p>
         <p>Orientation: <span id="orientation">Horizontal</span></p>
         <button id="rotate-btn">Rotate (R)</button>
+        <button id="randomize-btn">Randomize</button>
       </div>
-      <div id="placement-board" class="board"></div>
+      <div class="placement-wrapper">
+        <!-- Ship palette -->
+        <div id="ship-palette" class="ship-palette">
+          <div class="ship" data-length="5">Carrier (5)</div>
+          <div class="ship" data-length="4">Battleship (4)</div>
+          <div class="ship" data-length="3">Cruiser (3)</div>
+          <div class="ship" data-length="3">Submarine (3)</div>
+          <div class="ship" data-length="2">Destroyer (2)</div>
+        </div>
+
+        <!-- Board -->
+        <div id="placement-board" class="board"></div>
+      </div>
       <button id="start-game-btn" disabled>Start Battle!</button>
     </div>
   </body>
