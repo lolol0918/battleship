@@ -85,3 +85,7 @@ body {
   justify-content: center;
   gap: 2em;
 }
+
+.hidden {
+  display: none;
+}
