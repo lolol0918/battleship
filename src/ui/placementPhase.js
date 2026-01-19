@@ -17,6 +17,13 @@ export default class PlacementPhase {
     this.renderBoard();
     this.setupRotateButton();
     this.setupRandomizeButton();
+    this.setupStartButton();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  startBattle() {
+    document.getElementById('placement-phase').classList.add('hidden');
+    document.getElementById('battle-phase').classList.remove('hidden');
   }
 
   checkStartButton() {
@@ -106,6 +113,14 @@ export default class PlacementPhase {
 
       // Enable start button
       this.checkStartButton();
+    });
+  }
+
+  setupStartButton() {
+    const startBtn = document.getElementById('start-game-btn');
+
+    startBtn.addEventListener('click', () => {
+      this.startBattle();
     });
   }
 }
