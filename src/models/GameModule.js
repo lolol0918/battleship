@@ -18,15 +18,20 @@ export default class GameModule {
   }
 
   startBattle() {
+    // Hide placement, show battle
     document.getElementById('placement-phase').classList.add('hidden');
     document.getElementById('battle-phase').classList.remove('hidden');
 
-    // create GameController after placement
+    // Randomize computer ships now
+    this.computerBoard.placeShipsRandomly();
+
+    // Create GameController with fully populated boards
     this.gameController = new GameController(
-      this.playerBoard,
-      this.computerBoard,
+      { name: 'Player', gameboard: this.playerBoard },
+      { name: 'Computer', gameboard: this.computerBoard },
     );
 
+    // Initialize BattlePhase
     this.battlePhase = new BattlePhase(
       this.gameController.player,
       this.gameController.computer,

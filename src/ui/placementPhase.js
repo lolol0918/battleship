@@ -26,6 +26,8 @@ export default class PlacementPhase {
     document.getElementById('placement-phase').classList.add('hidden');
     document.getElementById('battle-phase').classList.remove('hidden');
 
+    console.log(this.playerBoard);
+
     if (this.onFinish) this.onFinish();
   }
 

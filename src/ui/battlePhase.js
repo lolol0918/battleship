@@ -5,12 +5,12 @@ export default class BattlePhase {
     this.player = player;
     this.computer = computer;
     this.gameController = gameController;
-
-    this.playerContainer = document.getElementById('player-board'); // div for player board
-    this.computerContainer = document.getElementById('computer-board'); // div for computer board
   }
 
   init() {
+    this.playerContainer = document.getElementById('player-board'); // div for player board
+    this.computerContainer = document.getElementById('enemy-board'); // div for computer board
+
     this.renderBoards();
   }
 
@@ -21,12 +21,14 @@ export default class BattlePhase {
 
   renderPlayerBoard() {
     // Use your renderBoard util
-    renderBoard(this.playerContainer, this.playerBoard, { showShips: true });
+    renderBoard(this.playerContainer, this.player.gameboard, {
+      showShips: true,
+    });
   }
 
   renderComputerBoard() {
     // Hide ships for the computer
-    renderBoard(this.computerContainer, this.computerBoard, {
+    renderBoard(this.computerContainer, this.computer.gameboard, {
       showShips: false,
     });
   }
