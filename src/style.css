@@ -20,63 +20,207 @@ body {
   min-width: 150px;
 }
 
-.ship {
-  background-color: #88c0d0;
-  color: #fff;
-  text-align: center;
-  padding: 5px;
-  cursor: grab;
-  border-radius: 4px;
-  user-select: none;
+/* Battle Phase Container */
+#battle-phase {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
 }
 
+#battle-phase h2 {
+  text-align: center;
+  color: #2e3440;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Battle Status */
+#battle-status {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 15px;
+  background: linear-gradient(135deg, #5e81ac, #81a1c1);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#turn-indicator {
+  margin: 0;
+  color: #eceff4;
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Boards Wrapper */
+.boards-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Board Sections */
+.board-section {
+  text-align: center;
+}
+
+.board-section h3 {
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  color: #3b4252;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Board Grid */
 .board {
   display: grid;
   grid-template-columns: repeat(10, 40px);
   grid-template-rows: repeat(10, 40px);
+  gap: 2px;
+  background-color: #4c566a;
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Cell Styling */
 .cell {
-  background-color: #ddd;
-  border: 1px solid #555;
-}
-/* Hover effect for player's board */
-.player-board .cell:hover {
-  background-color: #bbb;
+  background-color: #d8dee9;
+  border: 1px solid #4c566a;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
 }
 
-/* Ship cells (only show for player's board or if showShips = true) */
+.cell:hover {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+/* Player Board Cells */
+#player-board .cell:hover {
+  background-color: #c5ccd6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Enemy Board Cells - Targeting */
+#enemy-board .cell:hover:not(.hit):not(.miss) {
+  background-color: #bf616a;
+  cursor: crosshair;
+  box-shadow: 0 0 8px rgba(191, 97, 106, 0.6);
+}
+
+/* Ship Cells */
 .cell.has-ship {
-  background-color: #4caf50; /* green for ships */
+  background-color: #88c0d0;
+  border-color: #5e81ac;
 }
 
-/* Hit marker */
+#player-board .cell.has-ship {
+  background: linear-gradient(135deg, #88c0d0, #81a1c1);
+}
+
+/* Hit Marker */
 .cell.hit {
-  background-color: #e53935; /* red */
+  background-color: #bf616a;
+  background: radial-gradient(circle, #bf616a, #d08770);
   color: white;
   font-weight: bold;
+  border-color: #a54e56;
+  animation: hitPulse 0.5s ease;
 }
 
-/* Miss marker */
+.cell.hit::after {
+  content: '✕';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #eceff4;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Miss Marker */
 .cell.miss {
-  background-color: #90caf9; /* light blue */
+  background-color: #81a1c1;
+  background: radial-gradient(circle, #81a1c1, #88c0d0);
+  border-color: #5e81ac;
+  animation: missPulse 0.5s ease;
 }
 
-/* Computer board cells when ships are hidden */
-.computer-board .cell.has-ship {
-  background-color: #ddd; /* same as base, hidden */
+.cell.miss::after {
+  content: '○';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  color: #eceff4;
 }
 
-/* Optional: visually separate boards */
-.player-board {
-  border: 2px solid #4caf50;
-  display: inline-block;
-  margin-right: 20px;
+/* Hide ships on enemy board */
+#enemy-board .cell.has-ship:not(.hit) {
+  background-color: #d8dee9;
+  border-color: #4c566a;
 }
 
-.computer-board {
-  border: 2px solid #f44336;
-  display: inline-block;
+/* Disabled state for cells that can't be clicked */
+.cell.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Animations */
+@keyframes hitPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(191, 97, 106, 0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes missPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .boards-wrapper {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .board {
+    grid-template-columns: repeat(10, 35px);
+    grid-template-rows: repeat(10, 35px);
+  }
+
+  #battle-phase h2 {
+    font-size: 1.5rem;
+  }
+
+  .board-section h3 {
+    font-size: 1.2rem;
+  }
 }
 
 #placement-phase {

@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="placement-phase">
+    <div id="placement-phase" class="hidden">
       <div class="ship-info">
         <p>Orientation: <span id="orientation">Horizontal</span></p>
         <button id="rotate-btn">Rotate (R)</button>
@@ -21,8 +21,12 @@
       </div>
       <button id="start-game-btn" disabled>Start Battle!</button>
     </div>
-    <div id="battle-phase" class="hidden">
+    <div id="battle-phase" class="">
       <h2>Battle Phase</h2>
+      <!-- Battle status -->
+      <div id="battle-status">
+        <p id="turn-indicator">Your turn</p>
+      </div>
 
       <div class="boards-wrapper">
         <!-- Player board -->
@@ -36,11 +40,6 @@
           <h3>Enemy Waters</h3>
           <div id="enemy-board" class="board"></div>
         </div>
-      </div>
-
-      <!-- Battle status -->
-      <div id="battle-status">
-        <p id="turn-indicator">Your turn</p>
       </div>
     </div>
   </body>
