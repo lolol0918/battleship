@@ -3,6 +3,7 @@ import {
   getRandomCoordinate,
   generateShipCoordinates,
 } from '../utils/placeShipRandomly.js';
+import Ship from './Ship.js';
 
 export default class Gameboard {
   static GRID_SIZE = 10;
@@ -27,6 +28,11 @@ export default class Gameboard {
     this.missedAttacks = [];
     this.allAttacks = new Set();
     this.occupiedCoordinates = new Set();
+  }
+
+  resetAttacks() {
+    this.missedAttacks = [];
+    this.allAttacks = new Set();
   }
 
   // helper function  for checking if there is  a ship on a square
@@ -72,16 +78,14 @@ export default class Gameboard {
     // reset ships to avoid duplicates
     this.reset();
 
+    this.reset();
+
     for (const { name, length } of Gameboard.shipsToPlace) {
       let placed = false;
 
       while (!placed) {
         const orientation = getRandomOrientation();
-
-        // this is where the coord will start
         const startingCoordinate = getRandomCoordinate();
-
-        // and this one is the collection of all of them
         const coordinates = generateShipCoordinates(
           startingCoordinate,
           length,
@@ -89,10 +93,11 @@ export default class Gameboard {
         );
 
         try {
-          this.placeShip({ name, length }, coordinates);
+          // ✅ create a Ship instance instead of passing plain object
+          this.placeShip(new Ship(length), coordinates);
           placed = true;
         } catch (err) {
-          // Do nothing, just retry with new random coordinates
+          // just retry
         }
       }
     }

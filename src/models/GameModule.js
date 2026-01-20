@@ -31,6 +31,8 @@ export default class GameModule {
       { name: 'Computer', gameboard: this.computerBoard },
     );
 
+    this.gameController.startGame();
+
     // Initialize BattlePhase
     this.battlePhase = new BattlePhase(
       this.gameController.player,
