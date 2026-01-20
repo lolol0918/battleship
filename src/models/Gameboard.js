@@ -80,6 +80,7 @@ export default class Gameboard {
 
     this.reset();
 
+    // eslint-disable-next-line no-unused-vars
     for (const { name, length } of Gameboard.shipsToPlace) {
       let placed = false;
 
