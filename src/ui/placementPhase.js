@@ -1,11 +1,12 @@
 import renderBoard from './renderBoard.js';
+import Gameboard from '../models/Gameboard.js';
 
 export default class PlacementPhase {
-  constructor(playerBoard, containerId, shipData) {
+  constructor(playerBoard, containerId) {
     this.playerBoard = playerBoard;
     this.container = document.getElementById(containerId);
-    this.shipData = shipData; // array of ships
-    this.availableShips = [...shipData];
+    this.shipData = Gameboard.shipsToPlace; // array of ships
+    this.availableShips = [...Gameboard.shipsToPlace];
     this.orientation = 'horizontal';
     this.currentShip = null;
 
@@ -24,6 +25,8 @@ export default class PlacementPhase {
   startBattle() {
     document.getElementById('placement-phase').classList.add('hidden');
     document.getElementById('battle-phase').classList.remove('hidden');
+
+    if (this.onFinish) this.onFinish();
   }
 
   checkStartButton() {

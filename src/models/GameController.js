@@ -1,5 +1,3 @@
-import Ship from './Ship';
-
 export default class GameController {
   constructor(player, computer) {
     this.player = player;
@@ -9,28 +7,17 @@ export default class GameController {
   }
 
   startGame() {
-    // reset the player's board
-    this.player.gameboard.reset();
-    this.computer.gameboard.reset();
+    this.player.gameboard.resetAttacks();
+    this.computer.gameboard.resetAttacks();
 
-    // Populate ships (hardcoded for now)
-    this.player.gameboard.placeShip(new Ship(5), [
-      [0, 0],
-      [0, 1],
-      [0, 2],
-      [0, 3],
-      [0, 4],
-    ]); // example
-    this.computer.gameboard.placeShip(new Ship(5), [
-      [0, 0],
-      [0, 1],
-      [0, 2],
-      [0, 3],
-      [0, 4],
-    ]); // example
-
+    // Set the starting turn
     this.currentTurn = this.player;
     this.hasStarted = true;
+  }
+
+  resetAttacks() {
+    this.allAttacks.clear();
+    this.missedAttacks = [];
   }
 
   switchTurn() {
