@@ -57,6 +57,13 @@ export default class BattlePhase {
     const x = Number(cell.dataset.x);
     const y = Number(cell.dataset.y);
 
+    // check if already attacked
+    if (
+      this.gameController.computer.gameboard.allAttacks.has([x, y].toString())
+    ) {
+      return; // ignore click
+    }
+
     const result = this.gameController.playerAttack([x, y]);
     this.updateCell(cell, result);
 
