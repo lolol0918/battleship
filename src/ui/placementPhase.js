@@ -61,8 +61,14 @@ export default class PlacementPhase {
   handleDrop(e) {
     if (!this.currentShip) return;
 
-    const x = Number(e.target.dataset.x);
-    const y = Number(e.target.dataset.y);
+    const cell = e.target.closest('.cell');
+    if (!cell) {
+      // Dropped outside a valid cell, do nothing
+      return;
+    }
+
+    const x = Number(cell.dataset.x);
+    const y = Number(cell.dataset.y);
 
     const coords = [];
     for (let i = 0; i < this.currentShip.length; i++) {
