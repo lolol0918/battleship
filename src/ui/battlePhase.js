@@ -113,7 +113,7 @@ export default class BattlePhase {
     });
 
     // Disable all clicks on enemy board
-    const enemyCells = this.enemyBoardContainer.querySelectorAll('.cell');
+    const enemyCells = this.computerContainer.querySelectorAll('.cell');
     enemyCells.forEach((cell) => {
       // eslint-disable-next-line no-param-reassign
       cell.style.cursor = 'not-allowed';
