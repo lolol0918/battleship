@@ -67,12 +67,18 @@ export default class BattlePhase {
     const result = this.gameController.playerAttack([x, y]);
     this.updateCell(cell, result);
 
-    if (!this.gameController.isGameOver()) {
-      // Trigger computer turn after slight delay for UX
-      setTimeout(() => this.computerMove(), 0);
-    } else {
+    // Check for game over
+    if (this.gameController.isGameOver()) {
       this.endGame(this.gameController.getWinner());
+      return;
     }
+
+    // If player missed, start computer's turn
+    if (result === 'miss') {
+      // Small delay for UX
+      setTimeout(() => this.computerMove(), 800);
+    }
+    // If player hit, player keeps turn (no else needed)
   }
 
   endGame(winner) {
@@ -122,20 +128,29 @@ export default class BattlePhase {
     });
   }
 
-  // Remove the old showPlayAgainButton method - you don't need it anymore
-
   computerMove() {
-    const move = this.gameController.computerAttack();
-    const { coordinates, result } = move;
+    // Make sure it's the computer's turn
+    if (this.gameController.getCurrentPlayer() !== this.gameController.computer)
+      return;
+
+    const { coordinates, result } = this.gameController.computerAttack();
 
     const cell = this.playerContainer.querySelector(
       `[data-x='${coordinates[0]}'][data-y='${coordinates[1]}']`,
     );
     this.updateCell(cell, result);
 
+    // Check game over
     if (this.gameController.isGameOver()) {
-      this.endGame();
+      this.endGame(this.gameController.getWinner());
+      return;
     }
+
+    // If computer hit, attack again after a short delay
+    if (result === 'hit') {
+      setTimeout(() => this.computerMove(), 500); // 500ms delay for each hit
+    }
+    // If miss, now it’s the player’s turn, board can be clickable again
   }
 
   wireEvents() {

@@ -44,12 +44,18 @@ export default class GameController {
 
     if (result === 'already attacked') throw new Error('already attacked');
 
-    this.switchTurn();
+    if (result === 'miss') {
+      this.switchTurn();
+    }
 
     return result;
   }
 
   computerAttack() {
+    if (this.player.gameboard.allAttacks.size >= 100) {
+      throw new Error('No valid moves left');
+    }
+
     if (this.currentTurn !== this.computer)
       throw new Error("Not computer's turn");
 
@@ -66,7 +72,10 @@ export default class GameController {
 
     const result = this.player.gameboard.receiveAttack(coord);
 
-    this.switchTurn(); // back to human
+    if (result === 'miss') {
+      this.switchTurn();
+    }
+
     return { coordinates: coord, result };
   }
 
