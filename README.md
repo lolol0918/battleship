@@ -62,3 +62,9 @@ To use the project, follow these steps:
 ```
 
 ## 📸 Screenshots
+
+Placement Phase\
+![Ship Placement](./images/screenshots/placementphase.jpg)
+
+Battle Phase
+![Player Board](./images/screenshots/battlephase.jpg)
