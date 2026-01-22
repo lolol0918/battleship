@@ -62,13 +62,3 @@ To use the project, follow these steps:
 ```
 
 ## 📸 Screenshots
-
-## 🤝 Contributing
-
-To contribute to the project, please follow these steps:
-
-1. Fork the repository using `git fork`
-2. Create a new branch using `git branch`
-3. Make changes and commit them using `git commit`
-4. Push the changes using `git push`
-5. Create a pull request using `git pull-request`
