@@ -34,6 +34,15 @@ export default class BattlePhase {
     });
   }
 
+  updateTurnIndicator() {
+    const container = document.getElementById('turn-indicator');
+
+    // eslint-disable-next-line no-unused-expressions
+    this.gameController.getCurrentPlayer() === this.player
+      ? (container.textContent = 'Your Turn')
+      : (container.textContent = "Computer's Turn");
+  }
+
   // eslint-disable-next-line class-methods-use-this
   updateCell(cell, result, showShip = false) {
     // Remove previous classes
@@ -66,6 +75,8 @@ export default class BattlePhase {
 
     const result = this.gameController.playerAttack([x, y]);
     this.updateCell(cell, result);
+
+    this.updateTurnIndicator();
 
     // Check for game over
     if (this.gameController.isGameOver()) {
@@ -139,6 +150,8 @@ export default class BattlePhase {
       `[data-x='${coordinates[0]}'][data-y='${coordinates[1]}']`,
     );
     this.updateCell(cell, result);
+
+    this.updateTurnIndicator();
 
     // Check game over
     if (this.gameController.isGameOver()) {
