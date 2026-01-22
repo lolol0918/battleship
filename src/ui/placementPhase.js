@@ -1,5 +1,6 @@
 import renderBoard from './renderBoard.js';
 import Gameboard from '../models/Gameboard.js';
+import Ship from '../models/Ship.js';
 
 export default class PlacementPhase {
   constructor(playerBoard, containerId) {
@@ -81,12 +82,18 @@ export default class PlacementPhase {
     }
 
     try {
-      this.playerBoard.placeShip(this.currentShip, coords);
+      // Create a real Ship instance
+      const shipInstance = new Ship(this.currentShip.length);
+      shipInstance.name = this.currentShip.name;
 
-      // remove ship from availableShips
+      this.playerBoard.placeShip(shipInstance, coords);
+
+      // Remove ship from availableShips
       this.availableShips = this.availableShips.filter(
         (ship) => ship.name !== this.currentShip.name,
       );
+
+      this.currentShip = null;
 
       this.currentShip = null;
 
