@@ -73,4 +73,4 @@ To use the project, follow these steps:
 
 ## Github Pages
 
-[Link Text](https://lolol0918.github.io/battleship/)
+[Battleship](https://lolol0918.github.io/battleship/)
