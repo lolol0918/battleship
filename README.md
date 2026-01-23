@@ -70,3 +70,7 @@ To use the project, follow these steps:
 ## Battle Phase
 
 ![Player Board](./images/screenshots/battlephase.jpg)
+
+## Github Pages
+
+[Link Text](https://lolol0918.github.io/battleship/)
