@@ -2,13 +2,15 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 export default {
-  mode: 'development',
+  mode: 'deployment',
   entry: './src/index.js',
   output: {
-    filename: 'main.js',
-    path: path.resolve('dist'),
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
     clean: true,
+    publicPath: '/battleship/',
   },
+
   devServer: {
     static: './dist',
     open: true,
@@ -23,13 +25,13 @@ export default {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'], // order matters
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html', // This copies HTML from src to dist
+      template: './src/index.html',
     }),
   ],
 };
